@@ -1,2 +1,2 @@
 # pylearn
-Command Line Spaced Repetition Program in Python 3
+Spaced repetition program in Python 3
