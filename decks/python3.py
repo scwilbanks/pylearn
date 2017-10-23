@@ -91,7 +91,7 @@ def Questions():
         'max(iterable)':
         "Return the largest item in an iterable.",
 
-        'max(arg1, arg2, *args)':
+        'max(arg1, arg2[, *args])':
         "Return the largest of two or more arguments",
 
         'memoryview(object)':
@@ -100,7 +100,7 @@ def Questions():
         'min(iterable)':
         "Return the smallest item in iterable.",
 
-        'min(arg1, arg2, *args)':
+        'min(arg1, arg2[, *args])':
         "Return the smallest of two or more arguments.",
 
         'next(iterator[, default])':
@@ -116,7 +116,10 @@ def Questions():
         "Open file and return a corresponding file object. If the file cannot be opened, an OSError is raised.",
 
         'ord(c)':
-        "Return an integer representing the Unicode code point of a character c."
+        "Return an integer representing the Unicode code point of a character c.",
+
+        'set([iterable])':
+        "Return a set object, optionally with elements from iterable."
 
         }
     lib4builtintypes = {
@@ -125,7 +128,7 @@ def Questions():
         "Return True if item x is equal to an item in sequence.",
 
         'x not in s':
-        "Return False if item x is equal to an item in sequence.",
+        "Return True if item x is not equal to any item in sequence.",
 
         's + t':
         "Concatenate sequences s and t.",
@@ -185,10 +188,10 @@ def Questions():
         "Sort the sequence",
 
         'range(i, j[, k])':
-        "Return list between i and j with optional step k.",
+        "Return list between integers i and j with optional step k.",
 
         'range(i)':
-        "Return list from 0 to i.",
+        "Return list from 0 to integer i.",
 
         'str(object)':
         "Return string version of object."
