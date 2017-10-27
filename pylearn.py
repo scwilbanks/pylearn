@@ -6,8 +6,6 @@ from time import sleep
 from os.path import isfile
 import pygame
 from pygame import mixer
-pygame.init()
-pygame.mixer.init()
 
 """
 Takes randomized list of questions and checks input against answer. Plays accompanying sound file if there is one in the sound folder.
@@ -39,6 +37,7 @@ def ChangeScore(key, ans):
         score = 0
     else:
         return "ERROR Change Score"
+    print()
     scores[key] = [score, date.toordinal(date.today())+score]
     if score == 0:
         print(pre)
@@ -95,6 +94,8 @@ def MakeQuestion(ans, prompt):
             return result==ans
 
 def Start(questions):
+    pygame.init()
+    pygame.mixer.init()
     keys = list(questions.keys())
     if mode == 'shuffle':
         shuffle(keys)
@@ -105,14 +106,14 @@ def Start(questions):
         for val in vals:
             keys.append(list(questions.keys())[list(questions.values()).index(val)])
     finished = "You are finisheding with studying ",subject+"!"
-    today = [finished]
+    today = []
     for key in keys:
         if scores[key][1] <= date.toordinal(date.today()):
             today.insert(-1, key)
     print()
-    print('You will study', len(today)-1, 'of', len(keys), "items today.")
+    print('You will study', len(today), 'of', len(keys), "items today.")
     sleep(.5)
-    while len(today) > 1:
+    while len(today) > 0:
         for key in today:
             print()
             print("____________________________")
@@ -123,9 +124,7 @@ def Start(questions):
                 today.remove(key)
             elif res == False:
                 today.insert(-1, key)
-            print(len(today)-1, "items left today.")
-        if len(today) == 1:
-            break
+            print(len(today), "items left today.")
     print(''.join(finished))
     return
 
