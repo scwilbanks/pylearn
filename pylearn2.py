@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from sys import argv
+from random import shuffle
 import json
 from datetime import *
 import os.path
@@ -16,6 +17,7 @@ import os.path
 -make outro of each card to clean up main function
 -/d for data on card
 -statistics
+-when card is deleted, continues to count it in cards remaining
 """
 
 PATH = 'decks/'+argv[1]+'.json'
@@ -57,7 +59,8 @@ def make_todayscards():
     for card in deck:
         if round(deck[card]['Due']) < date.toordinal(date.today()):
             todayscards.append([deck[card]['Due'], card])
-    todayscards.sort
+    shuffle(todayscards)
+    #todayscards.sort
     return todayscards
 
 
@@ -109,7 +112,10 @@ def edit_card(card):
 def delete_card(card):
     with open(PATH, 'r') as file:
         data = file.read()
-    deck = json.loads(data)
+    if data:
+        deck = json.loads(data)
+    else:
+        deck = {}
     print(type(card))
     del deck[card]
     with open(PATH, 'w') as file:
@@ -119,8 +125,11 @@ def delete_card(card):
 def add_card():
     with open(PATH, 'r') as file:
         data = file.read()
-    deck = json.loads(data)
-    
+    if data:
+        deck = json.loads(data)
+    else:
+        deck = {}
+
     card = input('Answer for card:\n\n')
     assert card not in deck
     prompt = input('Prompt for card:\n\n')
@@ -158,6 +167,7 @@ def main():
     else:
         with open(PATH, 'w') as file:
             pass
+        deck = {}
     todayscards = make_todayscards()
     print('--------------------------\n')
     print('Studying '+str(len(todayscards))+' cards today.\n')
@@ -189,7 +199,8 @@ def main():
             else:
                 menu = False
                 if not evaluate(answer, card[1]):
-                    #relearning 1min then 10mins
+                    #relearning 1min, 10mins, then make due tomorrow
+                    #dont change ease, already degraded when wrong answer
                     #make new arr for relearns. add with bisect.insort_left
                     #probably just search when it inserts a new one
                     #for each card check if next relearn is due, then dequeue
